@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="Add your prescriptions"
+    android:layout_marginBottom="10dp"
+    />
+<EditText
+	android:id="@+id/name"
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:hint="Name of drug"
+	/>
+<EditText
+	android:id="@+id/period"
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:hint="Time between dosage"
+	/>
+<EditText
+	android:id="@+id/amount"
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:hint="Amount of doses"
+	/>
+<Button
+	android:id="@+id/firstDose"
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Set the date of first dose"
+    android:onClick="setDateonClick"
+	/>
+<Button
+	  android:layout_marginTop="20dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:text="Add drug" 
+      android:onClick="addDrugonClick"
+    />
+
+
+</LinearLayout>
+
