@@ -42,15 +42,18 @@ public class MainAcMedicalPrescription extends Activity
   	protected void onResume(){
 	    super.onResume();
 	    oSQLiteDB = drugDBHelper.getWritableDatabase();
-	    Cursor oCursor = oSQLiteDB.query(drugDBHelper.TABLE_NAME, new String[]{"*"} ,drugDBHelper.COL6+" = 0", null, null, null, null,null);
+	    Cursor oCursor = oSQLiteDB.query(drugDBHelper.TABLE_NAME, new String[]{"*"} ,drugDBHelper.COL5+" > 0", null, null, null, null,null);
 		drugList = new ArrayList<Drug>();
 		makeList(oCursor,drugList);
-		Log.i("PMP",drugList.size()+"");
 		
-		ArrayAdapter<Drug> drugAdapter = new ArrayAdapter<Drug>(this,android.R.layout.simple_list_item_1, drugList);
-		listView = (ListView) findViewById(R.id.drugListView);
+		//ArrayAdapter<Drug> drugAdapter = new ArrayAdapter<Drug>(this,android.R.layout.simple_list_item_1, drugList);
+		ArrayAdapter<Drug> drugAdapter = new MyListAdapter(this,R.layout.drugrowlistview,drugList);
+		listView = (ListView) findViewById(R.id.druglistview);
+		//listView.setItemsCanFocus(true);
 		listView.setAdapter(drugAdapter);
 	}
+	
+
 	public void addDrugonClick(View v){
 		Intent intent = new Intent(this,MedicalPrescription.class);
 		startActivity(intent);
@@ -62,18 +65,20 @@ public class MainAcMedicalPrescription extends Activity
 		while(move)
 		{
 			Drug drug = new Drug();
+			drug.setId(cursor.getInt(0));
 			drug.setName(cursor.getString(1));
 			drug.setPeriodTime(cursor.getInt(2));
 			drug.setAmountOfDoses(cursor.getInt(3));
+			drug.setRemainingDoses(cursor.getInt(4));
 			try{
-				DateFormat format = new SimpleDateFormat("dd-M-yyyy hh:mm");
-				Date date = format.parse(cursor.getString(4));
-
+				Date date = DateConverter.stringToDate(cursor.getString(5));
 				drug.setDateOfFirstDose(date);
+				date = DateConverter.stringToDate(cursor.getString(6));
+				drug.setDateOfNextDose(date);
 			}catch(ParseException exc){
 				Log.i("PMP",exc.toString());
 			}
-			drug.setMarkStatus(cursor.getInt(5));
+			
 			move = cursor.moveToNext();
 			list.add(drug);
 		}

@@ -114,10 +114,12 @@ public class MedicalPrescription extends Activity
 		drugCV.put(myHelper.COL2,drug.getName());
 		drugCV.put(myHelper.COL3,drug.getPeriodTime());
 		drugCV.put(myHelper.COL4,drug.getAmountOfDoses());
+		drugCV.put(myHelper.COL5,drug.getRemainingDoses());
+   		String dateToDB = DateConverter.dateToString(startDate.getTime());
+		drugCV.put(myHelper.COL6,dateToDB);
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm");
-   		String dateToDB = sdf.format(startDate.getTime());
-		drugCV.put(myHelper.COL5,dateToDB);
+		drugCV.put(myHelper.COL7, DateConverter.dateToString( drug.getDateOfNextDose() ) );
+
 		int id = (int)oSQLiteDB.insert(myHelper.TABLE_NAME,null,drugCV);
 		if(id<0){
 			Log.i("PMP","-1 while adding to database");
