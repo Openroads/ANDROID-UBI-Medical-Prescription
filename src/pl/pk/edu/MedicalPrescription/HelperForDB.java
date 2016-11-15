@@ -20,7 +20,9 @@ public class HelperForDB extends SQLiteOpenHelper{
 	protected static final String COL3 = "period";
 	protected static final String COL4 = "dosesAmount";
 	protected static final String COL5 = "startTime";
-	protected static final String COL6 = "markStatus";
+	protected static final String COL6 = "nextDoseDate";
+	protected static final String COL7 = "lastDoseDate";
+	protected static final String COL8 = "markStatus";
 
 
 	private static final String CREATE_DRUG="CREATE TABLE " + TABLE_NAME +"("
@@ -29,7 +31,9 @@ public class HelperForDB extends SQLiteOpenHelper{
 	+COL3+" INT,"
 	+COL4+" INT,"
 	+COL5+" VARCHAR(25),"
-	+COL6+" INT DEFAULT 0"
+	+COL6+" VARCHAR(25),"
+	+COL7+" VARCHAR(25),"
+	+COL8+" INT DEFAULT 0"
 	+");";
 	private static final String DELETE_ENTRIES = "DROP DATABASE "+TABLE_NAME; 
 

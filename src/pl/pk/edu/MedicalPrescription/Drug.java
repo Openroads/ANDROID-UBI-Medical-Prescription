@@ -7,6 +7,8 @@ public class Drug{
 	private int periodTime;
 	private int amountOfDoses;
 	private Date dateOfFirstDose;
+	private Date dateOfNextDose;
+	private Date dateOfLastDose;
 	private int markStatus;
 
 	public Drug(){}
