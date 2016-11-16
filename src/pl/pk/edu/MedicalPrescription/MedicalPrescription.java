@@ -9,7 +9,6 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 import android.view.View;
 import android.widget.TimePicker;
-import android.content.ContentValues;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -17,9 +16,9 @@ import android.app.TimePickerDialog;
 import android.widget.TimePicker;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
+import android.content.ContentValues;
+import android.content.ContentResolver;
 import android.util.Log;
-
-
 
 
 
@@ -105,10 +104,16 @@ public class MedicalPrescription extends Activity
    			
    		}else{
    			Drug oDrug = new Drug(nameToBD,Integer.valueOf(periodToBD),Integer.valueOf(amountToBD),startDate.getTime());
+
    			addDrugToDB(oDrug);
+
+   			SenderToCalendar sender = new SenderToCalendar();
+   			sender.setEventInCalendar(this,oDrug);
+
    		}
    	
 	}
+
 	private void addDrugToDB(Drug drug)
 	{
 		ContentValues drugCV = new ContentValues();
@@ -125,8 +130,7 @@ public class MedicalPrescription extends Activity
 		if(id<0){
 			Log.i("PMP","-1 while adding to database");
 		}
-		Intent intent = new Intent(this,MainAcMedicalPrescription.class);
-		startActivity(intent);
+		
 	}
 	private boolean checkCorrectionOfIntegerInput(String iStr)
 	{

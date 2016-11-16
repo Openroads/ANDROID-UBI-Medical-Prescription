@@ -47,12 +47,10 @@ public class MainAcMedicalPrescription extends Activity
 		drugList = new ArrayList<Drug>();
 		makeList(oCursor,drugList);
 		
-		//ArrayAdapter<Drug> drugAdapter = new ArrayAdapter<Drug>(this,android.R.layout.simple_list_item_1, drugList);
 		if(!drugList.isEmpty())
 		{
 			ArrayAdapter<Drug> drugAdapter = new MyListAdapter(this,R.layout.drugrowlistview,drugList);
 			listView = (ListView) findViewById(R.id.druglistview);
-			//listView.setItemsCanFocus(true);
 			listView.setAdapter(drugAdapter);
 		}
 	}

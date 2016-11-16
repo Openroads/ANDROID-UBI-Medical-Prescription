@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
+import java.util.TimeZone;
 
 
 public class DateConverter
@@ -11,7 +12,7 @@ public class DateConverter
     public static Date stringToDate(String dateString) throws ParseException
     {
         Date date = null;
-        DateFormat format = new SimpleDateFormat("dd-M-yyyy hh:mm");
+        DateFormat format = new SimpleDateFormat("dd-M-yyyy HH:mm");
         
         date = format.parse(dateString);
         
@@ -22,7 +23,7 @@ public class DateConverter
     {
         String dateString = null;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy HH:mm");
         dateString = sdf.format(date.getTime());
        
         return dateString;
