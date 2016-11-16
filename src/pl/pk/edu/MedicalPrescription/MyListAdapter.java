@@ -12,7 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class MyListAdapter extends ArrayAdapter<Drug> {
-
+    private ArrayList<Drug> list = new ArrayList<Drug>();
     private int layout_resource;
     Context context;
     private TextView tt2;
@@ -28,11 +28,12 @@ public class MyListAdapter extends ArrayAdapter<Drug> {
         super(context, resource, drugs);
         this.layout_resource=resource;
         this.context=context;
+        this.list = drugs;
       
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         View v = convertView;
         Holder holder = null;
@@ -49,34 +50,40 @@ public class MyListAdapter extends ArrayAdapter<Drug> {
             holder.btnCheck = (Button)   v.findViewById(R.id.check_btn);
             v.setTag(holder);
 
+
         }else{
             holder = (Holder) convertView.getTag();
         }
-
-        drug = this.getItem(position); // the same as ArrayList<drugs> drugs.get(index)
+        //drug = list.get(position);
+        drug = getItem(position); // the same as ArrayList<drugs> drugs.get(index)
 
         if (drug != null) {
 
                 holder.textName.setText(drug.getName());
+                if(drug.getRemainingDoses()>0){
                 holder.textDate.setText(DateConverter.dateToString( drug.getDateOfNextDose() ));
+
+                }else{
+                    holder.textDate.setText("Finished");
+                    holder.btnCheck.setVisibility(View.INVISIBLE);
+                }
+
+                
             
             if(holder.btnCheck != null){
                 holder.btnCheck.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View w){
-                       // Log.i("PMP", position+"position");
-                        // ja pierdole 
-                        if(drug.takeDose()==false)
+                        Drug drugs = getItem(position);
+                        if(drugs.takeDose()==false)
                         {
                             Toast.makeText(getContext(), "Doses finished.",Toast.LENGTH_LONG).show();
-                            Log.i("PMP", drug.getRemainingDoses()+"w");
+                            Log.i("PMP", drugs.getRemainingDoses()+"w");
                             notifyDataSetChanged();
-                            //holder.textDate.setText("Finished");
-                           // holder.btnCheck.setVisibility(View.INVISIBLE);
 
                         }else{
-                            Log.i("PMP", drug.getRemainingDoses()+"poza ifem");
-                             //holder.textDate.setText(DateConverter.dateToString( drug.getDateOfNextDose() ));
+                            
+                            Log.i("PMP", drugs.getRemainingDoses()+"poza ifem");
                             notifyDataSetChanged();
                         }
                         

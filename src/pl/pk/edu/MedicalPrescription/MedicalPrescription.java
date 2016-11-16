@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import android.app.TimePickerDialog;
 import android.widget.TimePicker;
 import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.util.Log;
 
 
@@ -124,6 +125,8 @@ public class MedicalPrescription extends Activity
 		if(id<0){
 			Log.i("PMP","-1 while adding to database");
 		}
+		Intent intent = new Intent(this,MainAcMedicalPrescription.class);
+		startActivity(intent);
 	}
 	private boolean checkCorrectionOfIntegerInput(String iStr)
 	{

@@ -14,6 +14,7 @@ import java.text.ParseException;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.content.Intent;
+import android.content.ContentValues;
 
 
 
@@ -56,11 +57,30 @@ public class MainAcMedicalPrescription extends Activity
 		}
 	}
 
-	private void reload()
-	{
-		
-	}
+	@Override
+   protected void onStop()
+   {
+   	 super.onStop();
+   	 addToDb();
 
+   }
+   private void addToDb()
+   {
+   		oSQLiteDB = drugDBHelper.getWritableDatabase();
+   		for(Drug d : drugList){
+ 		ContentValues drugCV = new ContentValues();
+ 		drugCV.put(drugDBHelper.COL1,d.getId());
+ 		drugCV.put(drugDBHelper.COL2,d.getName());
+ 		drugCV.put(drugDBHelper.COL3,d.getPeriodTime());
+ 		drugCV.put(drugDBHelper.COL4,d.getAmountOfDoses());
+ 		drugCV.put(drugDBHelper.COL5,d.getRemainingDoses());
+
+ 		drugCV.put(drugDBHelper.COL6,DateConverter.dateToString( d.getDateOfFirstDose() ));
+ 		drugCV.put(drugDBHelper.COL7,DateConverter.dateToString( d.getDateOfNextDose()  ));
+ 		int ids = (int)oSQLiteDB.update(drugDBHelper.TABLE_NAME,drugCV,d.getId() +" = "+ drugDBHelper.COL1,null);
+
+   		}
+   }
 	
 
 	public void addDrugonClick(View v){
