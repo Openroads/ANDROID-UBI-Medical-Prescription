@@ -25,8 +25,8 @@ public class SenderToCalendar{
 	{
 		makeAtribute(drug);
 
-			boolean automat_event_SHP =false;
-			if(automat_event_SHP==true)
+			boolean automat_event_SHP =true;
+			if(automat_event_SHP==false)
 			{
 				Intent calendarI = new Intent(Intent.ACTION_INSERT)
                                     .setData(Events.CONTENT_URI)
@@ -60,18 +60,24 @@ public class SenderToCalendar{
 
 				Toast.makeText(context, "Reminder and event added.",Toast.LENGTH_SHORT).show();
 
-             	Intent intent = new Intent(context,MainAcMedicalPrescription.class);
-            	context.startActivity(intent);
+             	/*Intent intent = new Intent(context,MainAcMedicalPrescription.class);
+            	context.startActivity(intent);*/
              }
 	}
 
 	public void updateEventInCalendar(Context context, Drug drug){
-		boolean automat_event_SHP =false;
-			if(automat_event_SHP==true)
+		makeAtribute(drug);
+		boolean automat_event_SHP =true;
+			if(automat_event_SHP==false)
 			{
 
 			}
 
+	}
+
+	public void deleteEventFromCalendar(Context context, Drug drug)
+	{
+		
 	}
 	private void makeAtribute(Drug drug)
 	{

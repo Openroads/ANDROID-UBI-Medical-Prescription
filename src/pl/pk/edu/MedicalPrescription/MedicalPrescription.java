@@ -106,10 +106,10 @@ public class MedicalPrescription extends Activity
    			Drug oDrug = new Drug(nameToBD,Integer.valueOf(periodToBD),Integer.valueOf(amountToBD),startDate.getTime());
 
    			addDrugToDB(oDrug);
-
+  Log.i("PMP","-1nienienie");
    			SenderToCalendar sender = new SenderToCalendar();
    			sender.setEventInCalendar(this,oDrug);
-
+        finish();
    		}
    	
 	}

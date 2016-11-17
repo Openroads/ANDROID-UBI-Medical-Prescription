@@ -16,6 +16,13 @@ import android.widget.ListView;
 import android.content.Intent;
 import android.content.ContentValues;
 
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
+import android.widget.AdapterView;
+import android.view.Menu;
+
 
 
 
@@ -36,7 +43,6 @@ public class MainAcMedicalPrescription extends Activity
         drugDBHelper = new HelperForDB(this);
 
         
-        
     }
 
     @Override
@@ -47,12 +53,7 @@ public class MainAcMedicalPrescription extends Activity
 		drugList = new ArrayList<Drug>();
 		makeList(oCursor,drugList);
 		
-		if(!drugList.isEmpty())
-		{
-			ArrayAdapter<Drug> drugAdapter = new MyListAdapter(this,R.layout.drugrowlistview,drugList);
-			listView = (ListView) findViewById(R.id.druglistview);
-			listView.setAdapter(drugAdapter);
-		}
+		showDrugListview();
 	}
 
 	@Override
@@ -62,6 +63,44 @@ public class MainAcMedicalPrescription extends Activity
    	 addToDb();
 
    }
+   private void showDrugListview(){
+
+   	if(!drugList.isEmpty())
+		{
+			ArrayAdapter<Drug> drugAdapter = new MyListAdapter(this,R.layout.drugrowlistview,drugList);
+			listView = (ListView) findViewById(R.id.druglistview);
+			listView.setAdapter(drugAdapter);
+			registerForContextMenu(listView);
+		}
+
+   }
+
+	@Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.layout.menucontext, menu);
+    }
+ 
+    @Override
+    public boolean onContextItemSelected(MenuItem item)
+    {
+       AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId())
+        {
+            case R.id.delete_drug:
+           		 Log.i("PMP","POSITION TO DELETE "+info.position);
+                drugList.get(info.position).setRemainingDoses(-1);
+                showDrugListview();
+                Toast.makeText(this,"czemu tak", Toast.LENGTH_LONG).show();
+                return true;
+        }
+ 
+        return super.onContextItemSelected(item);
+    }
+
    private void addToDb()
    {
    		oSQLiteDB = drugDBHelper.getWritableDatabase();
