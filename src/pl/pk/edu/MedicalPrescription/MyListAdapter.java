@@ -72,10 +72,14 @@ public class MyListAdapter extends ArrayAdapter<Drug> {
                     holder.textDate.setText(DateConverter.dateToString( drug.getDateOfNextDose() ));
                     Date currdate = new Date();
                     if((currdate.compareTo(drug.getDateOfNextDose())) >=0){
-                        holder.btnCheck.getBackground().setColorFilter(new LightingColorFilter(0xFFFFFFFF, 0xFFAA0000));
                         holder.btnCheck.setText("Take it!");
                         holder.textHurry.setText("You missed !");
                         holder.textDate.setTextColor(Color.RED);
+                    }else{
+                        holder.btnCheck.setText("Take");
+                        holder.textHurry.setText("Next dose:");
+                        holder.textDate.setText(DateConverter.dateToString( drug.getDateOfNextDose() ));
+                        holder.textDate.setTextColor(Color.WHITE);
                     }
                 }else if(remains == -1){
                     holder.textDate.setText("Deleted");
