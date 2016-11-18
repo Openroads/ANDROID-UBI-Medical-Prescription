@@ -69,6 +69,7 @@ public class MainAcMedicalPrescription extends Activity
 		{
 			ArrayAdapter<Drug> drugAdapter = new MyListAdapter(this,R.layout.drugrowlistview,drugList);
 			listView = (ListView) findViewById(R.id.druglistview);
+			Log.i("PMP", "aaa4");
 			listView.setAdapter(drugAdapter);
 			registerForContextMenu(listView);
 		}
@@ -94,7 +95,7 @@ public class MainAcMedicalPrescription extends Activity
            		 Log.i("PMP","POSITION TO DELETE "+info.position);
                 drugList.get(info.position).setRemainingDoses(-1);
                 showDrugListview();
-                Toast.makeText(this,"czemu tak", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Deleted", Toast.LENGTH_LONG).show();
                 return true;
         }
  
@@ -114,6 +115,7 @@ public class MainAcMedicalPrescription extends Activity
 
  		drugCV.put(drugDBHelper.COL6,DateConverter.dateToString( d.getDateOfFirstDose() ));
  		drugCV.put(drugDBHelper.COL7,DateConverter.dateToString( d.getDateOfNextDose()  ));
+ 		drugCV.put(drugDBHelper.COL8,d.getEventId());
  		int ids = (int)oSQLiteDB.update(drugDBHelper.TABLE_NAME,drugCV,d.getId() +" = "+ drugDBHelper.COL1,null);
 
    		}

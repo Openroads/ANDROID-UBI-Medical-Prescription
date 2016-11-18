@@ -22,7 +22,7 @@ public class HelperForDB extends SQLiteOpenHelper{
 	protected static final String COL5 = "remainingDoses";
 	protected static final String COL6 = "startTime";
 	protected static final String COL7 = "nextDoseDate";
-	//protected static final String COL8 = "lastDoseDate";
+	protected static final String COL8 = "eventID";
 	//protected static final String COL9 = "markStatus";
 
 
@@ -33,9 +33,10 @@ public class HelperForDB extends SQLiteOpenHelper{
 	+COL4+" INT,"
 	+COL5+" INT,"
 	+COL6+" VARCHAR(25),"
-	+COL7+" VARCHAR(25)"
+	+COL7+" VARCHAR(25),"
+	+COL8+" INTEGER"
 	+");";
-	//+COL8+" VARCHAR(25),"
+	
 	//+COL9+" INT DEFAULT 0"
 	private static final String DELETE_ENTRIES = "DROP DATABASE "+TABLE_NAME; 
 

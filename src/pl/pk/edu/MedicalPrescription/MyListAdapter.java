@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.content.DialogInterface;
 import android.app.AlertDialog;
 import android.widget.AdapterView;
+import android.graphics.LightingColorFilter;
+import android.graphics.Color;
 
 public class MyListAdapter extends ArrayAdapter<Drug> {
     private int layout_resource;
@@ -49,10 +51,10 @@ public class MyListAdapter extends ArrayAdapter<Drug> {
             vi = LayoutInflater.from(this.getContext());
             v = vi.inflate(R.layout.drugrowlistview, parent,false);
             holder = new Holder();
-            //holder.linerv = (LinearLayout) v.findViewById(R.id.linearrow);
             holder.textName = (TextView) v.findViewById(R.id.list_item_name);
             holder.textDate = (TextView) v.findViewById(R.id.list_item_date);
             holder.btnCheck = (Button)   v.findViewById(R.id.check_btn);
+            holder.textHurry= (TextView) v.findViewById(R.id.texthurry);
             v.setTag(holder);
 
 
@@ -64,10 +66,17 @@ public class MyListAdapter extends ArrayAdapter<Drug> {
         if (drug != null) {
 
                 holder.textName.setText(drug.getName());
+                
                 int remains = drug.getRemainingDoses();
                 if(remains>0){
-                holder.textDate.setText(DateConverter.dateToString( drug.getDateOfNextDose() ));
-
+                    holder.textDate.setText(DateConverter.dateToString( drug.getDateOfNextDose() ));
+                    Date currdate = new Date();
+                    if((currdate.compareTo(drug.getDateOfNextDose())) >=0){
+                        holder.btnCheck.getBackground().setColorFilter(new LightingColorFilter(0xFFFFFFFF, 0xFFAA0000));
+                        holder.btnCheck.setText("Take it!");
+                        holder.textHurry.setText("You missed !");
+                        holder.textDate.setTextColor(Color.RED);
+                    }
                 }else if(remains == -1){
                     holder.textDate.setText("Deleted");
                     holder.btnCheck.setVisibility(View.INVISIBLE);
@@ -76,7 +85,7 @@ public class MyListAdapter extends ArrayAdapter<Drug> {
                     holder.textDate.setText("Finished");
                     holder.btnCheck.setVisibility(View.INVISIBLE);
                 }
-
+                
                 
             
             if(holder.btnCheck != null){
@@ -93,14 +102,16 @@ public class MyListAdapter extends ArrayAdapter<Drug> {
                             
                             Log.i("PMP", "aaa");
                             notifyDataSetChanged();
-                            /*
-                            if(without id)
+                            
+                            /*if(without id)
                             SenderToCalendar send = SenderToCalendar();
                             send.setEventInCalendar(this.context,drug);
                             else{
                                 edit
 
                             }*/
+                            SenderToCalendar edit = new SenderToCalendar();
+                            edit.updateEventInCalendar(MyListAdapter.this.context,drug);
 
                         }
                         
@@ -108,16 +119,6 @@ public class MyListAdapter extends ArrayAdapter<Drug> {
                     }
                 });
             }
-
-            /*if(holder.linerv != null){
-            holder.linerv.setOnLongClickListener(new View.OnLongClickListener(){
-                    public boolean onLongClick(View w)
-                    {
-                        return true;
-                    }
-
-                });
-            }*/
 
         }
 
@@ -127,9 +128,9 @@ public class MyListAdapter extends ArrayAdapter<Drug> {
 }
 
     private static class Holder {
-        //public LinearLayout linerv;
         public TextView textName;
         public TextView textDate;
+        public TextView textHurry;
         public Button btnCheck;
     }
 

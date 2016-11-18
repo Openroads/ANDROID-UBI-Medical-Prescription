@@ -12,6 +12,7 @@ import android.provider.CalendarContract.Reminders;
 import android.net.Uri;
 import java.util.TimeZone;
 import android.content.Context;
+import 	android.content.ContentUris;
 
 public class SenderToCalendar{
 
@@ -51,7 +52,7 @@ public class SenderToCalendar{
 				Uri uri = cr.insert(Events.CONTENT_URI, values);//Events.CONTENT_URI  URL for the top-level calendar authority
 
 				long eventID = Long.parseLong(uri.getLastPathSegment());
-
+				drug.setEventId(eventID);
 				values = new ContentValues();
 				values.put(Reminders.MINUTES, 10);
 				values.put(Reminders.EVENT_ID, eventID);
@@ -60,8 +61,6 @@ public class SenderToCalendar{
 
 				Toast.makeText(context, "Reminder and event added.",Toast.LENGTH_SHORT).show();
 
-             	/*Intent intent = new Intent(context,MainAcMedicalPrescription.class);
-            	context.startActivity(intent);*/
              }
 	}
 
@@ -71,6 +70,18 @@ public class SenderToCalendar{
 			if(automat_event_SHP==false)
 			{
 
+			}else{
+
+				ContentResolver cr = context.getContentResolver();
+				ContentValues values = new ContentValues();
+				Uri updateUri = null;
+				// The new data for the event
+				values.put(Events.DTSTART, this.doseTime.getTime());
+				values.put(Events.DTEND, this.doseTime.getTime());
+				updateUri = ContentUris.withAppendedId(Events.CONTENT_URI, drug.getEventId());
+				int rows = context.getContentResolver().update(updateUri, values, null, null);
+				Toast.makeText(context, "Reminder and event updated.",Toast.LENGTH_SHORT).show();
+				Log.i("PMP", "Rows updated: " + rows);
 			}
 
 	}

@@ -13,6 +13,7 @@ public class Drug{
 	private Date dateOfNextDose;
 	private Date dateOfLastDose;
 	private int markStatus;
+	private long eventID;
 
 	public Drug(){}
 	public Drug(String name,int periodTime,int amountOfDoses,Date dateOfFirstDose)
@@ -57,11 +58,10 @@ public class Drug{
 	{
 		return dateOfLastDose;
 	}
-	public int getMarkStatus()
+	public long getEventId()
 	{
-		return this.markStatus;
+		return eventID;
 	}
-
 	public void setName(String name)
 	{
 		this.name=name;
@@ -95,9 +95,9 @@ public class Drug{
 	{
 		this.dateOfLastDose=dateOfLastDose;
 	}
-	public void setMarkStatus(int markStatus)
+	public void setEventId(long eventID )
 	{
-		this.markStatus=markStatus;
+		this.eventID = eventID;
 	}
 
 	public String toString(){

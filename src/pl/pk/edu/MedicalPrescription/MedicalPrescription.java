@@ -68,8 +68,8 @@ public class MedicalPrescription extends Activity
         calendar = Calendar.getInstance();
       	year = calendar.get(calendar.YEAR);
         month = calendar.get(calendar.MONTH);
-     	day = calendar.get(calendar.DAY_OF_MONTH);
-     	hour = calendar.get(calendar.HOUR_OF_DAY);
+     	  day = calendar.get(calendar.DAY_OF_MONTH);
+      	hour = calendar.get(calendar.HOUR_OF_DAY);
         minute = calendar.get(calendar.MINUTE);
         startDate = Calendar.getInstance();
         myHelper = new HelperForDB(this);
@@ -106,7 +106,6 @@ public class MedicalPrescription extends Activity
    			Drug oDrug = new Drug(nameToBD,Integer.valueOf(periodToBD),Integer.valueOf(amountToBD),startDate.getTime());
 
    			addDrugToDB(oDrug);
-  Log.i("PMP","-1nienienie");
    			SenderToCalendar sender = new SenderToCalendar();
    			sender.setEventInCalendar(this,oDrug);
         finish();
@@ -125,7 +124,7 @@ public class MedicalPrescription extends Activity
 		drugCV.put(myHelper.COL6,dateToDB);
 
 		drugCV.put(myHelper.COL7, DateConverter.dateToString( drug.getDateOfNextDose() ) );
-
+    drugCV.put(myHelper.COL8, drug.getEventId());
 		int id = (int)oSQLiteDB.insert(myHelper.TABLE_NAME,null,drugCV);
 		if(id<0){
 			Log.i("PMP","-1 while adding to database");
