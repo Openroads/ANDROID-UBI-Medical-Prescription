@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference     android:title="Notifications"
+        android:summary="Select the way of adding notifications to the calendar. "
+        android:key="notificationsType"
+        android:defaultValue="1"
+        android:entries="@array/listArray"
+        android:entryValues="@array/listValues" />
+</PreferenceScreen>
